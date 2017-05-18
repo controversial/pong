@@ -7,6 +7,11 @@ export default class Ball {
     this.vy = vy;
   }
 
+  setVelocity(newv) {
+    this.vx = Math.sign(this.vx) * newv;
+    this.vy = Math.sign(this.vy) * newv;
+  }
+
   bounceX() {
     this.vx *= -1;
   }
@@ -28,8 +33,15 @@ export default class Ball {
     // Bounce off paddles
     paddles.forEach((paddle) => {
       const velocityMatches = paddle.side === 'left' ? this.vx < 0 : this.vx > 0;
-      if (paddle.collidesWith(size, this) && velocityMatches) this.bounceX();
+      if (paddle.collidesWith(size, this) && velocityMatches) {
+        this.bounceX();
+        // Increase speed
+        const newv = Math.min(Math.abs(this.vx) + 0.0005, 0.006);
+        this.setVelocity(newv);
+      }
     });
+
+    if ((minx || maxx) && Math.abs(this.vx) > 0.0035) this.setVelocity(0.0035);
 
     // Scores
     if (minx) this.parent.score('right'); // If ball hits left wall, right gets a point
