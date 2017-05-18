@@ -15,7 +15,10 @@ export default class Pong {
 
     this.leftPaddle = new Paddle(this, 0.01, 'left');
     this.rightPaddle = new Paddle(this, 0.01, 'right');
-    this.ball = new Ball(this, 0.75, 0.25, 0.0025, 0.0025);
+    this.ball = new Ball(this, 0.75, 0.25, 0.0035, 0.0035);
+
+    this.leftScore = 0;
+    this.rightScore = 0;
 
     this.keysPressed = [];
 
@@ -43,6 +46,11 @@ export default class Pong {
     }
   }
 
+  score(side) {
+    if (side === 'left') this.leftScore += 1;
+    else this.rightScore += 1;
+  }
+
   draw() {
     const size = [this.canvas.width, this.canvas.height];
     this.ctx.clearRect(0, 0, ...size);
@@ -50,6 +58,11 @@ export default class Pong {
     this.leftPaddle.draw(this.ctx, size);
     this.rightPaddle.draw(this.ctx, size);
     this.ball.draw(this.ctx, size);
+
+    this.ctx.font = '100px monospace';
+    this.ctx.fillText(this.leftScore, 10, 110);
+    const rightX = size[0] - 10 - this.ctx.measureText(this.rightScore).width;
+    this.ctx.fillText(this.rightScore, rightX, 110);
   }
 
   step() {
