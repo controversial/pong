@@ -14,13 +14,17 @@ export default class Paddle {
   }
 
   up() {
-    this.y -= this.sensitivity;
-    this.parent.draw();
+    if (this.y > 0) {
+      this.y -= this.sensitivity;
+      this.parent.draw();
+    }
   }
 
   down() {
-    this.y += this.sensitivity;
-    this.parent.draw();
+    if (this.y < 1) {
+      this.y += this.sensitivity;
+      this.parent.draw();
+    }
   }
 
   boundingBox(size) {
