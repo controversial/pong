@@ -23,7 +23,7 @@ export default class Pong {
     this.keysPressed = [];
 
     window.addEventListener('resize', () => this.resize());
-    setTimeout(() => this.resize(), 50);
+    this.resize();
 
     window.addEventListener('keydown', e => this.keydown(e));
     window.addEventListener('keyup', e => this.keyup(e));
